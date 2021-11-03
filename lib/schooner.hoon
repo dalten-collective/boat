@@ -26,7 +26,7 @@
     :_  `(as-octt:mimes:html (en-json:html j.resource))
     [http-status (weld headers ['content-type'^'application/json']~)]
       %login-redirect
-    =-  [[http-status (weld headers ['locaton' -]~)] ~]
+    =-  [[http-status (weld headers ['location' -]~)] ~]
     %^  cat  3
       '/~/login?redirect='
     l.resource
