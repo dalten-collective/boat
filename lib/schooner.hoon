@@ -100,6 +100,5 @@
     -ms-filter: blur(1.5px) sepia(25%) brightness(100%) saturate(175%); 
     -o-filter: blur(1.5px) sepia(25%) brightness(100%) saturate(175%); 
   }
-
   '''
 --
