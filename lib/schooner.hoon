@@ -10,7 +10,7 @@
 +$  eyre-id  @ta
 +$  header  [key=@t value=@t]
 +$  headers  (list header)
-+$  resource  $%([%manx m=manx] [%json j=json] [%login-redirect l=cord] [%plain p=tape] [%none ~] [%stock =@ud])
++$  resource  $%([%manx m=manx] [%json j=json] [%login-redirect l=cord] [%plain p=tape] [%none ~] [%stock ~])
 +$  http-status  @ud
 ++  response
   |=  [=eyre-id =http-status =headers =resource]
@@ -36,7 +36,7 @@
       %none
     [[http-status headers] ~]
       %stock
-    (stock-error headers +.resource)
+    (stock-error headers http-status)
   ==
 ++  stock-error
   |=  [=headers code=@ud]
