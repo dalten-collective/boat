@@ -41,7 +41,7 @@
         ['content-type'^'application/json']~
     `(as-octt:mimes:html (en-json:html j.resource))
     ::
-    %html
+      %html
     :-  :-  http-status
       (weld headers ['content-type'^'text/html']~)
     `(as-octs:mimes:html h.resource)
