@@ -2,7 +2,7 @@
 ::  schooner is a hoon library intended to de-clutter raw http handling
 ::  in gall agents.
 ::
-::  It expets to receive a [=eyre-id =http-status =headers =resource]
+::  It expects to receive a [=eyre-id =http-status =headers =resource]
 ::  which are conveniently defined below. 
 ::
 /+  server
@@ -16,9 +16,9 @@
 +$  resource
   $%  
     [%manx m=manx]            [%json j=json]
-    [%login-redirect l=cord]  [%redirect o=cord]
-    [%plain p=tape]           [%none ~]
-    [%stock ~]
+    [%html h=cord]            [%login-redirect l=cord]
+    [%redirect o=cord]        [%plain p=tape]
+    [%none ~]                 [%stock ~]
   ==
 ::
 +$  http-status  @ud
@@ -40,6 +40,11 @@
         %+  weld  headers
         ['content-type'^'application/json']~
     `(as-octt:mimes:html (en-json:html j.resource))
+    ::
+    %html
+    :-  :-  http-status
+      (weld headers ['content-type'^'text/html']~)
+    `(as-octs:mimes:html h.resource)
     ::
       %login-redirect
     =+  %^  cat  3
