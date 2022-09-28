@@ -2,7 +2,7 @@
 ::  schooner is a hoon library intended to de-clutter raw http handling
 ::  in gall agents.
 ::
-::  It expets to receive a [=eyre-id =http-status =headers =resource]
+::  It expects to receive a [=eyre-id =http-status =headers =resource]
 ::  which are conveniently defined below. 
 ::
 /+  server
@@ -16,9 +16,11 @@
 +$  resource
   $%  
     [%manx m=manx]            [%json j=json]
-    [%login-redirect l=cord]  [%redirect o=cord]
-    [%plain p=tape]           [%none ~]
-    [%stock ~]
+    [%html h=cord]            [%login-redirect l=cord]
+    [%redirect o=cord]        [%plain p=tape]
+    [%none ~]                 [%stock ~]
+    [%image-png p=@]          [%audio-wav p=@]
+    [%text-plain p=tape]      [%application-javascript p=tape]
   ==
 ::
 +$  http-status  @ud
@@ -41,6 +43,11 @@
         ['content-type'^'application/json']~
     `(as-octt:mimes:html (en-json:html j.resource))
     ::
+     %html
+    :-  :-  http-status
+      (weld headers ['content-type'^'text/html']~)
+    `(as-octs:mimes:html h.resource)
+    ::
       %login-redirect
     =+  %^  cat  3
       '/~/login?redirect='
@@ -59,6 +66,26 @@
     :_  `(as-octt:mimes:html p.resource)
     :-  http-status
     (weld headers ['content-type'^'text/html']~)
+    ::
+      %text-plain
+    :_  `(as-octt:mimes:html p.resource)
+    :-  http-status
+    (weld headers ['content-type'^'text/plain']~)
+    ::
+      %application-javascript
+    :_  `(as-octt:mimes:html p.resource)
+    :-  http-status
+    (weld headers ['content-type'^'text/javascript']~)
+    ::
+      %image-png
+    :_  `(as-octs:mimes:html p.resource)
+    :-  http-status
+    (weld headers ['content-type'^'image/png']~)
+    ::
+      %audio-wav
+    :_  `(as-octs:mimes:html p.resource)
+    :-  http-status
+    (weld headers ['content-type'^'audio/wav']~)
     ::
       %none
     [[http-status headers] ~]
