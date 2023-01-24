@@ -1,0 +1,66 @@
+|%
+::
++$  eyre-id  @ta
++$  header  [key=@t value=@t]
++$  headers  (list header)
++$  http-status
+  $?  %100  %101  %102  %103
+    ::
+      %200  %201  %202  %203
+      %204  %205  %206  %207
+      %208  %226
+    ::
+      %300  %301  %302  %303
+      %304  %305  %306  %307
+      %308
+    ::
+      %401  %402  %403  %404
+      %405  %406  %407  %408
+      %409  %410  %411  %412
+      %413  %414  %415  %416
+      %417  %418  %421  %422
+      %423  %424  %425  %426
+      %428  %429  %431  %451
+    ::
+      %500  %501  %502  %503
+      %504  %505  %506  %507
+      %508  %510  %511
+    ::
+      %420
+  ==
+::  $custom: roll your own response function
+::
++$  custom
+  $-  [bowl:gall inbound-request:eyre]
+  (unit (quip card [http-status headers (unit octs)]))
+::  $nave:
+::
+::    like a beam but local and easier
+::    https://en.wikipedia.org/wiki/nave
+::
++$  nave  [=desk case=$@(%now case) =path]
+::  $node: what exists at that node?
+::
++$  node
+  $%  [%custom p=custom]                                :: use a custom function
+      [%redirect p=cord]                                :: redirects the browser
+      [%login-redirect p=cord]                          :: log in, then redirect
+      [%manx p=(each manx nave)]                        :: easily shares a manx.
+      [%json p=(each json nave)]                        :: easily shares a json.
+      [%html p=(each cord nave)]                        :: easily shares a html.
+      [%image-png p=(each @ nave)]                      :: easily shares a .png.
+      [%audio-wav p=(each @ nave)]                      :: easily shares a .wav.
+      [%text-plain p=(each tape nave)]                  :: easily shares a .txt.
+      [%text-javascript p=(each tape nave)]             :: easily shares some js
+  ==
+::  $nice: conveninently included fail
+::
++$  nice  ?(%500 %405 %404 %403 %420)
+::  $next: commands for boat
+::
++$  next
+  $%  [%add =nave auth=? =node]
+      [%aut =nave auth=?]
+      [%del =nave ~]
+  ==
+--
