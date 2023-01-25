@@ -32,7 +32,7 @@
 ::
 +$  custom
   $-  [bowl:gall inbound-request:eyre]
-  (unit (quip card [http-status headers (unit octs)]))
+  (unit (quip card:agent:gall [[http-status headers] (unit octs)]))
 ::  $nave:
 ::
 ::    like a beam but local and easier
@@ -43,21 +43,27 @@
 ::
 +$  node
   $%  [%custom p=custom]                                :: use a custom function
+      
+    ::
       [%redirect p=cord]                                :: redirects the browser
       [%login-redirect p=cord]                          :: log in, then redirect
+    ::
+      [%manx-marl p=(each manx marl)]                   :: easily shares a manx.
+    ::
       [%font-ttf p=nave]                                :: easily shares a .ttf.
       [%font-woff p=nave]                               :: easily shares a .woff
       [%font-woff2 p=nave]                              :: easily shares a woff2
+    ::
       [%audio-wav p=nave]                               :: easily shares a .wav.
       [%audio-mpeg p=nave]                              :: easily shares a .mp3.
-      [%manx p=(each manx nave)]                        :: easily shares a manx.
-      [%json p=(each json nave)]                        :: easily shares a json.
-      [%html p=(each cord nave)]                        :: easily shares a html.
+    ::
+      [%text-html p=(each cord nave)]                   :: easily shares a html.
       [%image-ico p=(each @ nave)]                      :: easily shares a .png.
       [%image-png p=(each @ nave)]                      :: easily shares a .png.
       [%text-css p=(each tape nave)]                    :: easily shares a .css.
       [%text-plain p=(each tape nave)]                  :: easily shares a .txt.
       [%text-javascript p=(each tape nave)]             :: easily shares some js
+      [%application-json p=(each json nave)]            :: easily shares a json.
   ==
 ::  $nice: conveninently included fail
 ::
@@ -65,8 +71,8 @@
 ::  $next: commands for boat
 ::
 +$  next
-  $%  [%add =nave auth=? =node]
-      [%aut =nave auth=?]
-      [%del =nave ~]
+  $%  [%add =path auth=? =node]
+      [%aut =path auth=?]
+      [%del =path ~]
   ==
 --

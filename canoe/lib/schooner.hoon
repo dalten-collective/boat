@@ -1,3 +1,4 @@
+::  this is being depricated actively - do not use
 ::
 ::  schooner is a hoon library intended to de-clutter raw http handling
 ::  in gall agents.
@@ -12,8 +13,9 @@
 +$  eyre-id  @ta
 +$  header  [key=@t value=@t]
 +$  headers  (list header)
+::  $node: what exists at that node?
 ::
-+$  resource
++$  node
   $%  
     [%manx p=manx]
     [%json p=json]
@@ -23,11 +25,12 @@
     [%redirect o=cord]
     [%text-plain p=tape]
     [%login-redirect l=cord]
-    [%application-javascript p=tape]
-    [%none ~]
+    [%text-javascript p=tape]
   ==
+::  $nice: conveninently included fail
 ::
 +$  nice  ?(%500 %405 %404 %403 %420)
+::
 +$  http-status
   $?  %100  %101  %102  %103
     ::
@@ -53,20 +56,65 @@
     ::
       %420
   --
---
 ::
 ::
-|_  $:  eid=eyre-id
-        hat=http-status
-        hed=headers 
-        sol=(unit resource)
+++  boat
+  |_  $:  eid=eyre-id
+          hat=http-status
+          hed=headers 
+          bod=(unit node)
+      ==
+  +*  bo  .
+  ++  bo-open  |=(e=eyre-id bo(eid e))
+  ++  bo-nice  |=(h=nice bo(hat h, bod ~))
+  ++  bo-abet
+    ?:  &(?=(nice hat) =(~ bod))
+      bo-stock
+    =*  gib  (cury give-simple-payload eid)
+    =+  fal  bo-stock(hat 500, bod ~)
+    ?~  bod   (gib [[hat hed] bod])
+    ^-  simple-payload:http
+    =+  body=(need bod)
+    ?-    -.body
+      %redirect  [[hat location+p.body^hed] ~]
+    ::
+        %manx
+      %-  gib
+      :-  [hat content-type+'text/html'^hed]
+      `(as-octt:mimes:html (en-xml:html p.body))
+    ::
+        %json
+      %-  gib
+      :-  [hat content-type+'application/json'^hed]
+      `(as-octt:mimes:html (en-json:html p.body))
+    ::
+        %html
+      %-  gib
+      :-  [hat content-type+'text/html'^hed]
+      `(as-octs:mimes:html p.body)
+    ::
+        %image-png
+      :-  [hat content-type+'image/png'^hed]
+      `(as-octs:mimes:html p.body)
+    ::
+        %audio-wav
+      :-  [hat content-type+'audio/wav'^hed]
+      `(as-octs:mimes:html p.body)
+    ::
+        %text-plain
+      :-  [hat content-type+'text/plain']
+      `(as-octt:mimes:html p.body)
+    ::
+        %login-redirect
+      =-  [[hat location+-^hed] ~]
+      (cat 3 '/~/login?redirect=' p.body)
+    ::
+        %text-javascript
+      :-  [hat content-type+'text/javascript']
+      `(as-octt:mimes:)
     ==
-+*  bo  .
-++  bo-open  |=(e=eyre-id bo(eid e))
-++  bo-nice
-  |=(h=nice bo(hat h, sol ~))
-++  bo-abet
-  ?:  &(?=(nice hat) =(~ sol))
+    
+      
 
   ^-  (list card:agent:gall)
   %+  give-simple-payload:app:server
