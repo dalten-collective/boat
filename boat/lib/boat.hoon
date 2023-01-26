@@ -72,7 +72,7 @@
     |=  inner=agent:gall
     =|  hold-0
     =*  hold  -
-    %+  verb  &
+    %+  verb  |
     ^-  agent:gall
     |_  dish=bowl:gall
     +*  this  .
@@ -156,6 +156,7 @@
           !<([eyre-id inbound-request:eyre] q.cag)
         =/  [[* site=(pole knot)] *]
           (parse-request-line:server url.request.inb)
+        ~&  >>  `(set path)`~(key by stores.hold)
         ?+    site
           =^  cards  inner  (on-poke:og cag)
           [cards this]
@@ -261,7 +262,7 @@
     ::
     ++  clew
       |=  [eid=eyre-id req=inbound-request:eyre nub=path]
-      ~&  >>  [eid req]
+      ~&  >>>  [eid req nub]
       ?~  hav=(~(get by stores.hold) nub)
         ?.  ?=(%'GET' method.request.req)
           (give eid [501 [accept+'GET']~] ~)
@@ -288,10 +289,43 @@
       ::
           %application-json
         %+  give  eid
-        :-  [200 [content-type+'/application/json']~]
+        :-  [200 [content-type+'application/json']~]
         ?:  ?=(%& -.p.node.u.hav)
           `(json-to-octs:server p.p.node.u.hav)
         `(json-to-octs:server !<(json (rood p.p.node.u.hav)))
+      ::
+          %text-javascript
+        %+  give  eid
+        :-  [200 [content-type+'text/javascript']~]
+        ?:  ?=(%& -.p.node.u.hav)
+          `(as-octs:mimes:html p.p.node.u.hav)
+        `(as-octs:mimes:html !<(@t (rood p.p.node.u.hav)))
+      ::
+          %text-plain
+        %+  give  eid
+        :-  [200 [content-type+'text/plain']~]
+        ?:  ?=(%& -.p.node.u.hav)
+          `(as-octs:mimes:html p.p.node.u.hav)
+        `(as-octt:mimes:html !<(wain (rood p.p.node.u.hav)))
+      ::
+          %text-css
+        %+  give  eid
+        :-  [200 [content-type+'text/css']~]
+        ?:  ?=(%& -.p.node.u.hav)
+          `(as-octs:mimes:html p.p.node.u.hav)
+        `(as-octs:mimes:html !<(@t (rood p.p.node.u.hav)))
+      ::
+          %text-html
+        =/  hed
+          :~  content-type+'text/html; charset=utf-8'
+              content-disposition+'inline'
+          ==
+        %+  give  eid
+        :-  [200 hed]
+        ?:  ?=(%& -.p.node.u.hav)
+          `(as-octs:mimes:html p.p.node.u.hav)
+        `(as-octs:mimes:html !<(@t (rood p.p.node.u.hav)))
+      ::
       ==
     ::  +yawl: convenient defaults
     ::

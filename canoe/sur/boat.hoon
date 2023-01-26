@@ -60,9 +60,9 @@
       [%text-html p=(each cord nave)]                   :: easily shares a html.
       [%image-ico p=(each @ nave)]                      :: easily shares a .png.
       [%image-png p=(each @ nave)]                      :: easily shares a .png.
-      [%text-css p=(each tape nave)]                    :: easily shares a .css.
-      [%text-plain p=(each tape nave)]                  :: easily shares a .txt.
-      [%text-javascript p=(each tape nave)]             :: easily shares some js
+      [%text-css p=(each cord nave)]                    :: easily shares a .css.
+      [%text-plain p=(each cord nave)]                  :: easily shares a .txt.
+      [%text-javascript p=(each cord nave)]             :: easily shares some js
       [%application-json p=(each json nave)]            :: easily shares a json.
   ==
 ::  $nice: conveninently included fail
