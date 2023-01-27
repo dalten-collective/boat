@@ -56,6 +56,11 @@
 ::
 |%
 +$  stores  (map path [auth=? =node])
+  (map path (map path [auth node]))
+  [/apps/canoe/~/this .^(arch %cy /this)]
+  /this/one/png
+  /this/other/css
+  /this/index/html
 +$  sealed  ?
 ::
 ++  agent

@@ -57,10 +57,10 @@
       [%audio-wav p=nave]                               :: easily shares a .wav.
       [%audio-mpeg p=nave]                              :: easily shares a .mp3.
     ::
-      [%text-html p=(each cord nave)]                   :: easily shares a html.
       [%image-ico p=(each @ nave)]                      :: easily shares a .png.
       [%image-png p=(each @ nave)]                      :: easily shares a .png.
       [%text-css p=(each cord nave)]                    :: easily shares a .css.
+      [%text-html p=(each cord nave)]                   :: easily shares a html.
       [%text-plain p=(each cord nave)]                  :: easily shares a .txt.
       [%text-javascript p=(each cord nave)]             :: easily shares some js
       [%application-json p=(each json nave)]            :: easily shares a json.
